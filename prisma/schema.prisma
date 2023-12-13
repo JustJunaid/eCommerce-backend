@@ -1,0 +1,58 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = []
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+// A user in the app
+model Users {
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  name             String
+  confirmationOTP  String
+  isEmailConfirmed Boolean
+  otpExpiryTime    DateTime
+  email            String
+  password         String?
+
+  Attributes Attributes[]
+  @@unique([email])
+}
+
+enum AttributesEnum {
+  WHOLE_NUMBER
+  VALUE_LIST
+}
+
+model Attributes {
+  id                String            @id @default(uuid())
+  attributeType     String
+  attributeName     String
+  attributeIconName String
+  attributeIconUrl  String
+  active            Boolean
+  attributeValue    String
+  attributeValues   AttributeValues[]
+  Users             Users?            @relation(fields: [usersId], references: [id])
+  usersId           Int?
+}
+
+model AttributeValues {
+  id                 String      @id @default(uuid())
+  attributeValueName String
+  iconName           String
+  iconUrl            String
+  index              Int
+  active             Boolean
+  Attributes         Attributes? @relation(fields: [attributesId], references: [id])
+  attributesId       String?
+}
