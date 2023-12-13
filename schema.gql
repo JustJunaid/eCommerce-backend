@@ -1,0 +1,53 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Attributes {
+  id: String!
+  attributeType: String!
+  attributeName: String!
+  attributeIconName: String!
+  attributeIconUrl: String!
+  active: Boolean!
+  attributeValue: String!
+  attributeValues: [AttributeValues!]!
+}
+
+type AttributeValues {
+  id: String!
+  attributeValueName: String!
+  iconName: String!
+  iconUrl: String!
+  index: Int!
+  active: Boolean!
+  attributesId: Int
+}
+
+input AttributesInput {
+  id: String!
+  attributeType: String!
+  attributeName: String!
+  attributeIconName: String!
+  attributeIconUrl: String!
+  active: Boolean!
+  attributeValue: String!
+  attributeValues: [AttributeValuesInput!]!
+}
+
+input AttributeValuesInput {
+  id: String!
+  attributeValueName: String!
+  iconName: String!
+  iconUrl: String!
+  index: Int!
+  active: Boolean!
+  attributesId: Int
+}
+
+type Query {
+  getAttributes: [Attributes!]!
+}
+
+type Mutation {
+  addAttributes(data: [AttributesInput!]!): String!
+}

@@ -6,10 +6,14 @@ import { SendEmailModule } from './sendEmail/sendEmail.module';
 import { AuthModule } from './auth/auth.module';
 import { AttributesModule } from './attributes/attributes.module';
 import config from './config';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
     imports: [
-        GraphQLModule.forRoot(config.graphql),
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            autoSchemaFile: 'schema.gql'
+          }),
         AuthModule,
         UsersModule,
         SharedModule,
