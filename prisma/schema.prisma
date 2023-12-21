@@ -5,16 +5,19 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  // previewFeatures = []
 }
 
 generator dbml {
   provider = "prisma-dbml-generator"
 }
 
-// A user in the app
+enum Role {
+  BUYER
+  SELLER
+}
+
 model Users {
-  id               Int      @id @default(autoincrement())
+  id               String   @id @default(uuid())
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   name             String
@@ -23,36 +26,37 @@ model Users {
   otpExpiryTime    DateTime
   email            String
   password         String?
+  role             Role     @default(BUYER)
 
-  Attributes Attributes[]
   @@unique([email])
 }
 
-enum AttributesEnum {
-  WHOLE_NUMBER
-  VALUE_LIST
+model Products {
+  id           String     @id @default(uuid())
+  createdAt    DateTime?  @default(now())
+  updatedAt    DateTime?  @updatedAt
+  productName  String
+  description  String
+  price        String
+  brand        Brands     @relation(fields: [brandsId], references: [id])
+  category     Categories @relation(fields: [categoriesId], references: [id])
+  rating       Int?
+  review       String?
+  // image        String  // TODO: Image to be added
+  brandsId     String
+  categoriesId String
 }
 
-model Attributes {
-  id                String            @id @default(uuid())
-  attributeType     String
-  attributeName     String
-  attributeIconName String
-  attributeIconUrl  String
-  active            Boolean
-  attributeValue    String
-  attributeValues   AttributeValues[]
-  Users             Users?            @relation(fields: [usersId], references: [id])
-  usersId           Int?
+model Categories {
+  id           String     @id @default(uuid())
+  createdAt    DateTime?  @default(now())
+  categoryName String
+  Products     Products[]
 }
 
-model AttributeValues {
-  id                 String      @id @default(uuid())
-  attributeValueName String
-  iconName           String
-  iconUrl            String
-  index              Int
-  active             Boolean
-  Attributes         Attributes? @relation(fields: [attributesId], references: [id])
-  attributesId       String?
+model Brands {
+  id        String     @id @default(uuid())
+  createdAt DateTime?  @default(now())
+  brandName String
+  Products  Products[]
 }

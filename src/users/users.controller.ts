@@ -4,10 +4,7 @@ import {
     Post,
     Body,
     HttpCode,
-    Delete,
-    Req,
     UseGuards,
-    Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger';

@@ -2,52 +2,46 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Attributes {
-  id: String!
-  attributeType: String!
-  attributeName: String!
-  attributeIconName: String!
-  attributeIconUrl: String!
-  active: Boolean!
-  attributeValue: String!
-  attributeValues: [AttributeValues!]!
+type Brand {
+  brandName: String!
 }
 
-type AttributeValues {
-  id: String!
-  attributeValueName: String!
-  iconName: String!
-  iconUrl: String!
-  index: Int!
-  active: Boolean!
-  attributesId: Int
+type Category {
+  categoryName: String!
 }
 
-input AttributesInput {
-  id: String!
-  attributeType: String!
-  attributeName: String!
-  attributeIconName: String!
-  attributeIconUrl: String!
-  active: Boolean!
-  attributeValue: String!
-  attributeValues: [AttributeValuesInput!]!
+type Product {
+  productName: String!
+  description: String!
+  price: String!
+  brand: Brand!
+  category: Category!
+  rating: Float!
+  review: String!
 }
 
-input AttributeValuesInput {
-  id: String!
-  attributeValueName: String!
-  iconName: String!
-  iconUrl: String!
-  index: Int!
-  active: Boolean!
-  attributesId: Int
+input BrandInput {
+  brandName: String!
+}
+
+input CategoryInput {
+  categoryName: String!
+}
+
+input ProductInput {
+  productName: String!
+  description: String!
+  price: String!
+  brand: BrandInput!
+  category: CategoryInput!
+  rating: Float!
+  review: String!
 }
 
 type Query {
-  getAttributes: [Attributes!]!
+  getProducts: [Product!]!
 }
 
 type Mutation {
-  addAttributes(data: [AttributesInput!]!): String!
+  addProduct(product: ProductInput!): String!
 }

@@ -4,79 +4,64 @@ const prisma = new PrismaClient();
 
 async function main() {
     await prisma.users.deleteMany();
+    await prisma.products.deleteMany()
+    await prisma.brands.deleteMany()
+    await prisma.categories.deleteMany()
 
     console.log('Seeding...');
 
-    const user1 = await prisma.users.create({
-        data: {
-            email: 'lisa@simpson.com',
-            name: 'Lisa',
-            password:
-                '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
-            confirmationOTP: '31234',
-            otpExpiryTime: new Date(),
-            isEmailConfirmed: false,
-        },
-    });
-
-    const user2 = await prisma.users.create({
-        data: {
-            email: 'junaid@fantoz.tech',
-            name: 'Junaid Choudhary',
-            password:
-                '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
-            confirmationOTP: '123432',
-            otpExpiryTime: new Date(),
-            isEmailConfirmed: false,
-        },
-    });
-
-    const attribute1 = await prisma.attributes.create({
-        data: {
-            attributeType: 'WHOLE_NUMBER',
-            attributeName: 'Whole number name',
-            attributeIconName: 'Icon 1',
-            attributeIconUrl: 'laksjdf',
-            active: true,
-            attributeValue: 'Only one value',
-        },
-    });
-
-    const attribute2 = await prisma.attributes.create({
-        data: {
-            attributeType: 'VALUE_LIST',
-            attributeName: 'Attribute name',
-            attributeIconName: 'Icon 2',
-            attributeIconUrl: 'laksjdf',
-            attributeValue: '',
-            active: true,
-            attributeValues: {
-                create: [
-                    {
-                        attributeValueName: 'First Value',
-                        iconName: 'String',
-                        iconUrl: 'String',
-                        index: 0,
-                        active: true,
-                    },
-                    {
-                        attributeValueName: 'Second Value',
-                        iconName: 'String',
-                        iconUrl: 'String',
-                        index: 1,
-                        active: true,
-                    },
-                    {
-                        attributeValueName: 'Third Value',
-                        iconName: 'String',
-                        iconUrl: 'String',
-                        index: 2,
-                        active: true,
-                    },
-                ],
+    await prisma.users.createMany({
+        data: [
+            {
+                email: 'lisa@simpson.com',
+                name: 'Lisa',
+                password:
+                    '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
+                confirmationOTP: '31234',
+                otpExpiryTime: new Date(),
+                isEmailConfirmed: false,
+                role: 'SELLER'
             },
-        },
+            {
+                email: 'junaid@fantoz.tech',
+                name: 'Junaid Choudhary',
+                password:
+                    '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
+                confirmationOTP: '123432',
+                otpExpiryTime: new Date(),
+                isEmailConfirmed: false,
+                role: 'SELLER'
+            }
+        ]
     });
+
+    await prisma.brands.createMany({
+        data: ["Puma",
+            "Reebok",
+            "Adidas",
+            "Woodland",
+            "Lee Cooper",
+            "Nike"].map((el, index) => ({ brandName: el, id: `${index + 1}` }))
+    })
+
+    await prisma.categories.createMany({
+        data: ["Footwear",
+            "Apparel",
+            "Perfumes",
+            "Accessories",
+            "Personal Care",
+            "Collectibles"].map((el, index) => ({ categoryName: el, id: `${index + 1}` }))
+    })
+
+    await prisma.products.createMany({
+        data: [...Array(6)].map((_, index) => ({
+            productName: `Product ${index + 1}`,
+            description: `Product Number ${index + 1}: A very good product everyone should buy it.`,
+            price: `${Math.random() * 1000}`,
+            brandsId: `${index + 1}`,
+            categoriesId: `${index + 1}`,
+        })),
+    })
 }
 
 main()

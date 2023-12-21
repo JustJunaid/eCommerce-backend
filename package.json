@@ -32,7 +32,7 @@
         "test": "jest --config ./test/jest-e2e.json",
         "docker:db": "docker-compose -f docker-compose.db.yml up -d",
         "migrate:dev": "prisma migrate dev --preview-feature",
-        "seed": "prisma db seed --preview-feature"
+        "seed": "ts-node prisma/seed.ts"
     },
     "dependencies": {
         "@apollo/server": "^4.9.5",

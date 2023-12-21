@@ -3,7 +3,7 @@
 //// ------------------------------------------------------
 
 Table Users {
-  id Int [pk, increment]
+  id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   name String [not null]
@@ -12,38 +12,43 @@ Table Users {
   otpExpiryTime DateTime [not null]
   email String [unique, not null]
   password String
-  Attributes Attributes [not null]
+  role Role [not null, default: 'BUYER']
 }
 
-Table Attributes {
+Table Products {
   id String [pk]
-  attributeType String [not null]
-  attributeName String [not null]
-  attributeIconName String [not null]
-  attributeIconUrl String [not null]
-  active Boolean [not null]
-  attributeValue String [not null]
-  attributeValues AttributeValues [not null]
-  Users Users
-  usersId Int
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  productName String [not null]
+  description String [not null]
+  price String [not null]
+  brand Brands [not null]
+  category Categories [not null]
+  rating Int
+  review String
+  brandsId String [not null]
+  categoriesId String [not null]
 }
 
-Table AttributeValues {
+Table Categories {
   id String [pk]
-  attributeValueName String [not null]
-  iconName String [not null]
-  iconUrl String [not null]
-  index Int [not null]
-  active Boolean [not null]
-  Attributes Attributes
-  attributesId String
+  createdAt DateTime [default: `now()`, not null]
+  categoryName String [not null]
+  Products Products [not null]
 }
 
-Enum AttributesEnum {
-  WHOLE_NUMBER
-  VALUE_LIST
+Table Brands {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  brandName String [not null]
+  Products Products [not null]
 }
 
-Ref: Attributes.usersId > Users.id
+Enum Role {
+  BUYER
+  SELLER
+}
 
-Ref: AttributeValues.attributesId > Attributes.id
+Ref: Products.brandsId > Brands.id
+
+Ref: Products.categoriesId > Categories.id

@@ -4,21 +4,20 @@ import { UsersModule } from './users/users.module';
 import { SharedModule } from './shared/shared.module';
 import { SendEmailModule } from './sendEmail/sendEmail.module';
 import { AuthModule } from './auth/auth.module';
-import { AttributesModule } from './attributes/attributes.module';
-import config from './config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ProductsModule } from './products/products.module';
 
 @Module({
     imports: [
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
-            autoSchemaFile: 'schema.gql'
-          }),
+            autoSchemaFile: 'src/schema.gql',
+        }),
         AuthModule,
         UsersModule,
         SharedModule,
         SendEmailModule,
-        AttributesModule,
+        ProductsModule
     ],
 })
-export class AppModule {}
+export class AppModule { }
