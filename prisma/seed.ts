@@ -19,7 +19,7 @@ async function main() {
                     '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
                 confirmationOTP: '31234',
                 otpExpiryTime: new Date(),
-                isEmailConfirmed: false,
+                isEmailConfirmed: true,
                 role: 'SELLER'
             },
             {
@@ -29,7 +29,7 @@ async function main() {
                     '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
                 confirmationOTP: '123432',
                 otpExpiryTime: new Date(),
-                isEmailConfirmed: false,
+                isEmailConfirmed: true,
                 role: 'SELLER'
             }
         ]

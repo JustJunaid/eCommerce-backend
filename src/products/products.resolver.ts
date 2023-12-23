@@ -9,13 +9,14 @@ import { Product } from 'src/products/models/product.model';
 export class ProductsResolver {
     constructor(private productsService: ProductsService) { }
 
+    @UseGuards(new GqlAuthGuard('jwt'))
     @Query(() => [Product])
-    // @UseGuards(new GqlAuthGuard('jwt'))
     getProducts(@CurrentUser() user: typeof CurrentUser) {
         return this.productsService.getProdcuts();
     }
 
-    @Mutation(() => String!)
+    @UseGuards(new GqlAuthGuard('jwt'))
+    @Mutation(() => Product)
     addProduct(
         @Args({ name: 'product', type: () => Product })
         data: Product,

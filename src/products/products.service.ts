@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-// import { Products } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Product } from './models/product.model';
 
@@ -18,7 +17,7 @@ export class ProductsService {
     }
 
     async addProduct(product: Product) {
-        const products = await this.prisma.products.create({
+        const addedProduct = await this.prisma.products.create({
             data: {
                 productName: product.productName,
                 description: product.description,
@@ -40,6 +39,6 @@ export class ProductsService {
             },
         });
 
-        return products;
+        return addedProduct;
     }
 }
