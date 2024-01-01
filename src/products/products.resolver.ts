@@ -7,7 +7,7 @@ import { Product } from 'src/products/models/product.model';
 
 @Resolver()
 export class ProductsResolver {
-    constructor(private productsService: ProductsService) { }
+    constructor(private productsService: ProductsService) {}
 
     @UseGuards(new GqlAuthGuard('jwt'))
     @Query(() => [Product])
@@ -22,5 +22,14 @@ export class ProductsResolver {
         data: Product,
     ) {
         return this.productsService.addProduct(data);
+    }
+
+    @UseGuards(new GqlAuthGuard('jwt'))
+    @Mutation(() => Product)
+    deleteProduct(
+        @Args({ name: 'productId' })
+        data: string,
+    ) {
+        return this.productsService.deleteProduct(data);
     }
 }

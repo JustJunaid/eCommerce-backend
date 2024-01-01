@@ -4,16 +4,16 @@ import { Product } from './models/product.model';
 
 @Injectable()
 export class ProductsService {
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(private readonly prisma: PrismaService) {}
 
     async getProdcuts() {
         const products = await this.prisma.products.findMany({
             include: {
                 brand: true,
-                category: true
+                category: true,
             },
         });
-        return products
+        return products;
     }
 
     async addProduct(product: Product) {
@@ -24,21 +24,34 @@ export class ProductsService {
                 price: product.price,
                 brand: {
                     create: {
-                        brandName: product.brand.brandName
-                    }
+                        brandName: product.brand.brandName,
+                    },
                 },
                 category: {
                     create: {
-                        categoryName: product.category.categoryName
-                    }
-                }
+                        categoryName: product.category.categoryName,
+                    },
+                },
             },
             include: {
                 brand: true,
-                category: true
+                category: true,
             },
         });
 
         return addedProduct;
+    }
+
+    async deleteProduct(productId: string) {
+        const result = await this.prisma.products.delete({
+            where: {
+                id: productId,
+            },
+            include: {
+                brand: true,
+                category: true,
+            },
+        });
+        return result;
     }
 }

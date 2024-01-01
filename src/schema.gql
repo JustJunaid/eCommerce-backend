@@ -11,6 +11,7 @@ type Category {
 }
 
 type Product {
+  id: String!
   productName: String!
   description: String!
   price: String!
@@ -29,6 +30,7 @@ input CategoryInput {
 }
 
 input ProductInput {
+  id: String!
   productName: String!
   description: String!
   price: String!
@@ -44,4 +46,5 @@ type Query {
 
 type Mutation {
   addProduct(product: ProductInput!): Product!
+  deleteProduct(productId: String!): Product!
 }

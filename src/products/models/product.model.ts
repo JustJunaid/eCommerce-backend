@@ -18,6 +18,9 @@ export class Category {
 @ObjectType()
 export class Product {
     @Field()
+    id?: string;
+
+    @Field()
     productName: string;
 
     @Field()
